@@ -1,21 +1,38 @@
 /* posts/index ================================ */
+.posts-index{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0px auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .posts-index-item {
-  padding: 20px 30px;
+  width: 25%;
+  padding: 10px 10px;
   background-color: white;
   overflow: hidden;
   box-shadow: 0 2px 6px #c1ced7;
+  margin: 15px;
+}
+
+.posts-index-item img{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .post-left img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 40%;
   box-shadow: 0 2px 6px #c1ced7;
   object-fit: cover;
 }
 
 .post-user-name a {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .post-user-name a:hover {
@@ -34,22 +51,41 @@
   text-align: left;
 }
 
+.post-index-title{
+  text-align: center;
+}
+
+.post-index-title a{
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.post-index-title a:hover{
+  border-bottom: solid #cccccc;
+  border-width: 2px;
+}
+
+.post-category p{
+  float: right;
+  font-size: 15px;
+}
+
 /* posts/show ================================ */
 .posts-show form {
   display: inline;
 }
 
 .posts-show-item {
-  padding: 30px;
+  padding: 20px;
   background-color: white;
   box-shadow: 0 2px 6px #c1ced7;
   overflow: hidden;
 }
 
-.posts-show-item img {
-  width: 60px;
-  height: 60px;
-  border-radius: 40%;
+.post-user-name img {
+  width: 40px;
+  height: 40px;
+  border-radius: 30%;
   box-shadow: 0 2px 6px #c1ced7;
   vertical-align: middle;
   object-fit: cover;
@@ -57,13 +93,23 @@
 
 .posts-show-item .post-user-name a {
   vertical-align: middle;
-  font-size: 24px;
+  font-size: 16px;
   margin-left: 15px;
 }
 
 .posts-show-item p {
-  font-size: 24px;
-  margin: 20px 0;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.post-image img{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.post-show-title{
+  text-align: center;
 }
 
 .post-time {
@@ -92,6 +138,21 @@
   color: #8899a6;
   text-decoration: underline;
   font-size: 14px;
+}
+
+/* posts/show ================================ */
+.user-show-title{
+  text-align: center;
+}
+
+.user-show-title a{
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.user-show-title a:hover{
+  text-decoration: underline;
+  text-decoration-color: #cccccc;
 }
 
 /* posts/new ================================ */

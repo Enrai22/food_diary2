@@ -1,24 +1,44 @@
-<p id="notice"><%= notice %></p>
+<div class="main user-show">
+  <div class="container">
+    <div class="user">
+      <%= image_tag(@user.image.url) if @user.image.present? %>
+      <h2><%= @user.name %></h2>
+      <p><%= @user.email %></p>
+      <div class="posts-show-item">
+        <% if Follow.find_by(user_id: @current_user.id, follow_user_id: @user.id) %>
+          <%= link_to("/follows/#{@user.id}/destroy", {method: "post"}) do %>
+            <span class="fa fa-user"></span>
+          <% end %>
+        <% else %>
+          <%= link_to("/follows/#{@user.id}/create", {method: "post"}) do %>
+            <span class="fa fa-user-plus"></span>
+          <% end %>
+        <% end %>
+        <%= @follows_count %>
+      </div>
+      <% if @user.id == @current_user.id %>
+        <%= link_to "編集", edit_user_path(@user) %>
+      <% end %>
+    </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+    <ul class="user-tabs">
+      <li class="active"><%= link_to("投稿", "/users/#{@user.id}") %></li>
+      <li><%= link_to("いいね!", "/users/#{@user.id}/likes") %></li>
+      <li><%= link_to("フォロー", "/users/#{@user.id}/follows") %></li>
+    </ul>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @user.image %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+    <div class="posts-index">
+      <% @user.posts.each do |post| %>
+        <div class="posts-index-item">
+          <div class="user-show-title">
+            <%= link_to(post.title, "/posts/#{post.id}") %>
+          </div>
+          <div class="post-category">
+            <p><%= post.category %></p>
+          </div>
+          <%= image_tag(post.image.url) if post.image.present? %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user
-  before_action :ensure_correct_user, {only: [:edit, :update, :destroy]}
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -28,11 +28,13 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params, user_id: @current_user.id)
+    @post = Post.new(post_params)
+    @post.user_id = @current_user.id
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: '投稿を作成しました' }
+        flash[:notice] = "投稿を作成しました"
+        format.html { redirect_to @post }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -46,7 +48,8 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: '投稿を編集しました' }
+        flash[:notice] = "投稿を編集しました"
+        format.html { redirect_to @post }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -59,8 +62,9 @@ class PostsController < ApplicationController
   # DELETE /posts/1.json
   def destroy
     @post.destroy
+    flash[:notice] = "投稿を削除しました"
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: '投稿を削除しました' }
+      format.html { redirect_to posts_url }
       format.json { head :no_content }
     end
   end
@@ -69,7 +73,7 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     if @post.user_id != @current_user.id
       flash[:notice] = "権限がありません"
-      redirect_to("/posts/index")
+      redirect_to("/posts")
     end
   end
 

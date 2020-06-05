@@ -1,49 +1,41 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @post.content %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @post.image %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @post.category %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @post.user_id %>
-</p>
-
-<p>
-  <strong>Rate deli:</strong>
-  <%= @post.rate_deli %>
-</p>
-
-<p>
-  <strong>Rate acc:</strong>
-  <%= @post.rate_acc %>
-</p>
-
-<p>
-  <strong>Rate rep:</strong>
-  <%= @post.rate_rep %>
-</p>
-
-<p>
-  <strong>Rate cost:</strong>
-  <%= @post.rate_cost %>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<div class="main posts-show">
+  <div class="container">
+    <div class="posts-show-item">
+      <div class="post-user-name">
+        <%= image_tag(@user.image.url) if @user.image.present? %>
+        <%= link_to(@user.name, "/users/#{@user.id}") %>
+      </div>
+      <p class="post-show-title">
+        <%= @post.title %>
+      </p>
+      <div class="post-image">
+      <%= image_tag(@post.image.url) if @post.image.present? %>
+      </div>
+      <div class="post-category">
+        <p><%= @post.category %></p><br>
+      </div>
+      <p>
+        <%= @post.content %>
+      </p>
+      <div class="post-time">
+        <%= @post.created_at %>
+      </div>
+      <% if Like.find_by(user_id: @current_user.id, post_id: @post.id) %>
+        <%= link_to("/likes/#{@post.id}/destroy", {method: "post"}) do %>
+          <span class="fa fa-heart like-btn-unlike"></span>
+        <% end %>
+      <% else %>
+        <%= link_to("/likes/#{@post.id}/create", {method: "post"}) do %>
+          <span class="fa fa-heart like-btn"></span>
+        <% end %>
+      <% end %>
+      <%= @likes_count %>
+      <% if @post.user_id == @current_user.id %>
+        <div class="post-menus">
+          <%= link_to("編集", "/posts/#{@post.id}/edit") %>
+          <%= link_to("削除", @post, method: :delete, data: { confirm: 'Are you sure?' }) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

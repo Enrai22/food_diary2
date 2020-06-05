@@ -1,37 +1,53 @@
 <%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+<div class="main users-new">
+  <div class="container">
+    <div class="form-heading">
+      <% if user.new_record? %>
+        <p>新規登録</p>
+      <% else %>
+        <p>ユーザー編集</p>
+      <% end %>
+      </div>
+    <div class="form users-form">
+      <div class="form-body">
+        <% if user.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+            <ul>
+              <% user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+
+        <div class="field">
+          <%= form.label :name ,"ユーザー名" %>
+          <%= form.text_field :name %>
+        </div>
+
+        <div class="field">
+          <%= form.label :email ,"Email" %>
+          <%= form.text_field :email %>
+        </div>
+
+        <div class="field">
+          <%= form.label :image ,"プロフィール画像" %>
+          <%= form.file_field :image %>
+        </div>
+
+        <% if user.new_record? %>
+          <div class="field">
+            <%= form.label :password ,"パスワード" %>
+            <%= form.password_field :password %>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <%= form.submit "登録"%>
+        </div>
+      <% end %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
   </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.file_field :image %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
